@@ -6,8 +6,8 @@ import SignupScreen from "../screens/SignupScreen";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { RootStackParamList } from "../App";
-import { Button } from "native-base";
-import { NavigationContainer } from "@react-navigation/native";
+import { Button } from "@rneui/base";
+
 const logo = require("../assets/logo.png");
 
 type Props = NativeStackScreenProps<RootStackParamList, "main">;
@@ -28,7 +28,7 @@ const MainScreen: React.FC<Props> = ({ navigation }) => {
         onPress={() => navigation.navigate("login")}>Login</Button>
       <Button
         size="lg"
-        variant={"secondary"}
+        type="clear"
         onPress={() => navigation.navigate("signup")}>Signup</Button>
     </View>
   );

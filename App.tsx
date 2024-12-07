@@ -1,6 +1,7 @@
 import { Appearance, LogBox, StyleSheet, View, Text } from "react-native";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
+import { Colors, ThemeProvider, createTheme, useTheme } from "@rneui/themed";
 import { AppDispatch, RootState, store } from "./store/store";
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,11 +9,27 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthContext } from "./store/AuthContext";
 import { Role } from "./entities/User";
 import { getProfile, setToken } from "./store/userSlice";
-import { NativeBaseProvider } from "native-base";
 import LoginNavigation from "./navigation/LoginNavigation";
 
 const Stack = createNativeStackNavigator();
+type FontStyle = 'normal' | 'italic' | 'oblique';
 
+const theme = createTheme({
+  darkColors: {
+    primary: "#0DCC70",
+    secondary: "#0CEF78",
+    success: "#0DCC70",
+    warning: "#FFA726",
+    background: "#121212",
+  },
+  lightColors: {
+    primary: "#0DCC70",
+    secondary: "#0CEF78",
+    success: "#0DCC70",
+    warning: "#FFA726",
+  },
+  mode: "dark",
+});
 
 export type RootStackParamList = {
   main: undefined;
@@ -35,12 +52,12 @@ export type RootStackParamList = {
   // services: undefined;
 };
 
-
 export default function App() {
   return (
       <Provider store={store}>
-
+        <ThemeProvider theme={theme}>
           <AppContent />
+        </ThemeProvider>
 
       </Provider>
   );
@@ -51,6 +68,7 @@ function AppContent() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.user.user);
 
+  const { theme } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
