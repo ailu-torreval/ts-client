@@ -8,6 +8,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthContext } from "./store/AuthContext";
 import { Role } from "./entities/User";
 import { getProfile, setToken } from "./store/userSlice";
+import { NativeBaseProvider } from "native-base";
+import LoginNavigation from "./navigation/LoginNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +39,9 @@ export type RootStackParamList = {
 export default function App() {
   return (
       <Provider store={store}>
+
           <AppContent />
+
       </Provider>
   );
 }
@@ -102,47 +106,3 @@ function AppContent() {
 }
 
 
-
-
-function LoginNavigation() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-    </Stack.Navigator>
-  );
-};
-
-function MainNavigation() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-    </Stack.Navigator>
-  );
-};
-
-function AdminNavigation() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-    </Stack.Navigator>
-  );
-};
-
-function LoginScreen() {
-  return (
-    <View>
-      <Text>Login Screen</Text>
-    </View>
-  );
-};
-
-function SignupScreen() {
-  return (
-    <View>
-      <Text>signup Screen</Text>
-    </View>
-  );
-};

@@ -2,10 +2,12 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, Image } from "react-native";
 import LoginScreen from "../screens/LoginScreen";
-
+import SignupScreen from "../screens/SignupScreen";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { RootStackParamList } from "../App";
+import { Button } from "native-base";
+import { NavigationContainer } from "@react-navigation/native";
 const logo = require("../assets/logo.png");
 
 type Props = NativeStackScreenProps<RootStackParamList, "main">;
@@ -18,20 +20,16 @@ const MainScreen: React.FC<Props> = ({ navigation }) => {
     <View style={styles.container}>
       <Image
         source={logo}
-        style={{ width: "50%", alignSelf: "center" }}
+        style={{ width: "50%", alignSelf: "center", marginBottom: 20 }}
         resizeMode="contain"
       />
       <Button
-        title="Login"
         size="lg"
-        onPress={() => navigation.navigate("login")}
-      />
+        onPress={() => navigation.navigate("login")}>Login</Button>
       <Button
-        title="Signup"
-        type="clear"
         size="lg"
-        onPress={() => navigation.navigate("signup")}
-      />
+        variant={"secondary"}
+        onPress={() => navigation.navigate("signup")}>Signup</Button>
     </View>
   );
 };
@@ -47,19 +45,21 @@ const styles = StyleSheet.create({
 
 const LoginNavigation: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName="main">
-      <Stack.Screen
-        name="main"
-        component={MainScreen}
-        options={{ headerShown: false, headerBackTitleVisible: false  }}
-      />
-      <Stack.Screen name="login" options={{ headerTitle: "" , headerBackTitleVisible: false }}>
-        {(props) => <LoginScreen />}
-      </Stack.Screen>
-      <Stack.Screen name="signup" options={{ headerTitle: "", headerBackTitleVisible: false  }}>
-        {(props) => <SignupScreen />}
-      </Stack.Screen>
-    </Stack.Navigator>
+    // <NavigationContainer>
+      <Stack.Navigator initialRouteName="main">
+        <Stack.Screen
+          name="main"
+          component={MainScreen}
+          options={{ headerShown: false, headerBackVisible: false }}
+        />
+        <Stack.Screen name="login" options={{ headerTitle: "", headerBackVisible: false }}>
+          {(props) => <LoginScreen />}
+        </Stack.Screen>
+        <Stack.Screen name="signup" options={{ headerTitle: "", headerBackVisible: false }}>
+          {(props) => <SignupScreen />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    // </NavigationContainer>
   );
 };
 
