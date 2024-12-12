@@ -1,7 +1,6 @@
 import { Appearance, LogBox, StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { Colors, ThemeProvider, createTheme, useTheme } from "@rneui/themed";
 import { AppDispatch, RootState, store } from "./store/store";
 import * as SecureStore from "expo-secure-store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,26 +9,39 @@ import { AuthContext } from "./store/AuthContext";
 import { Role } from "./entities/User";
 import { getProfile, setToken } from "./store/userSlice";
 import LoginNavigation from "./navigation/LoginNavigation";
+import { NativeBaseProvider } from 'native-base';
+import { extendTheme } from "native-base";
+import theme from "./theme";
+
+// const theme = extendTheme({
+//   colors: {
+//     green: {
+//       200: "#408E6E",
+//       500: "#45A47D",
+
+//     },
+//     yellow: {
+//       500: "#FFB443"
+//     },
+//     // Add new color
+//     primary: {
+//       200: "#408E6E",
+//       500: "#45A47D",
+//     },
+//     secondary: {
+//       200: "#FFB443",
+//       500: "#F39200",
+//     },
+//     // Redefining only one shade, rest of the color will remain same.
+//     amber: {
+//       400: '#d97706',
+//     },
+//   }
+// });
+
+
 
 const Stack = createNativeStackNavigator();
-type FontStyle = 'normal' | 'italic' | 'oblique';
-
-const theme = createTheme({
-  darkColors: {
-    primary: "#0DCC70",
-    secondary: "#0CEF78",
-    success: "#0DCC70",
-    warning: "#FFA726",
-    background: "#121212",
-  },
-  lightColors: {
-    primary: "#0DCC70",
-    secondary: "#0CEF78",
-    success: "#0DCC70",
-    warning: "#FFA726",
-  },
-  mode: "dark",
-});
 
 export type RootStackParamList = {
   main: undefined;
@@ -55,10 +67,9 @@ export type RootStackParamList = {
 export default function App() {
   return (
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
+        <NativeBaseProvider theme={theme}>
           <AppContent />
-        </ThemeProvider>
-
+        </NativeBaseProvider>
       </Provider>
   );
 }
@@ -68,7 +79,6 @@ function AppContent() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.user.user);
 
-  const { theme } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
